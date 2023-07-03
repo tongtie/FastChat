@@ -5,10 +5,6 @@ import argparse
 import uvicorn
 import json
 
-from dotenv import load_dotenv
-
-load_dotenv()
-
 from fastapi.middleware.cors import CORSMiddleware
 
 
@@ -39,6 +35,7 @@ def launch_controller(args):
 # launch the model worker
 def launch_model_worker(args):
     logger.info("launch_model_worker")
+    model_worker_module.args = args
     gptq_config = GptqConfig(
         ckpt=args.gptq_ckpt or args.model_path,
         wbits=args.gptq_wbits,
