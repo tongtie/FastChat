@@ -199,6 +199,7 @@ class ModelWorker:
         return {"conv": self.conv}
 
     def generate_stream_gate(self, params):
+        logger.debug(f"generate_stream_gate: {params}")
         try:
             for output in self.generate_stream_func(
                 self.model,
@@ -233,9 +234,12 @@ class ModelWorker:
             yield json.dumps(ret).encode() + b"\0"
 
     def generate_gate(self, params):
+        logger.debug(f"generate_gate: {params}")
         for x in self.generate_stream_gate(params):
             pass
-        return json.loads(x[:-1].decode())
+        result = json.loads(x[:-1].decode())
+        logger.debug(f"generate_gate result: {result}")
+        return result
 
     @torch.inference_mode()
     def get_embeddings(self, params):
