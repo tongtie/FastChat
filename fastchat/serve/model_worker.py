@@ -50,7 +50,10 @@ from fastchat.utils import build_logger, pretty_print_semaphore, get_context_len
 
 
 worker_id = str(uuid.uuid4())[:6]
-logger = build_logger("model_worker", f"model_worker_{worker_id}.log")
+
+#logger = build_logger("model_worker", f"model_worker_{worker_id}.log")
+logger = logging.getLogger(__name__)
+logger.info(f"worker_id: {worker_id}")
 
 global_counter = 0
 model_semaphore = None

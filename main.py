@@ -1,6 +1,8 @@
 import sys
 import os
 import argparse
+import logging
+
 
 import uvicorn
 import json
@@ -11,7 +13,9 @@ from fastapi.middleware.cors import CORSMiddleware
 # Add the path to the directory containing the module to the Python path (wants absolute paths)
 sys.path.append(os.path.abspath(os.path.dirname(__file__)))
 
-from fastchat.utils import build_logger
+logging.basicConfig(level=logging.DEBUG, format='%(asctime)s - %(levelname)s - %(message)s')
+
+
 from fastchat.serve import controller as controller_module
 from fastchat.serve.controller import Controller, app as controller_app
 from fastchat.modules.gptq import GptqConfig
@@ -20,7 +24,7 @@ from fastchat.serve.model_worker import ModelWorker, app as worker_app, worker_i
 from fastchat.model.model_adapter import add_model_args
 from fastchat.serve.openai_api_server import app as api_app, app_settings
 
-logger = build_logger("main", "main.log")
+logger = logging.getLogger(__name__)
 
 # docs/langchain_integration.md
 
